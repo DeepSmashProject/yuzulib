@@ -2,6 +2,7 @@ version: '3'
 services:
   yuzu_emu:
     tty: true
+    runtime: nvidia
     image: yuzu_emu:latest
     container_name: yuzu_emu
     ports:
