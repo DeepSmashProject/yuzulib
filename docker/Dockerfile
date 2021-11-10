@@ -34,6 +34,7 @@ RUN apt update && apt install -y sudo && \
 RUN git clone https://github.com/conan-io/conan.git conan_src 
 RUN cd conan_src && pip install -e .
 
+RUN sudo apt install -y ca-certificates
 RUN git clone --recursive https://github.com/yuzu-emu/yuzu
 
 RUN mkdir /yuzu/build
