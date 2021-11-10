@@ -1,0 +1,14 @@
+version: '3'
+services:
+  yuzu_emu:
+    tty: true
+    image: yuzu_emu:latest
+    container_name: yuzu_emu
+    ports:
+      - "6080:80"
+      - "5901:5901"
+    volumes:
+      - "/Users/ruihirano/MyProjects/DeepSmashProject/:/workspace"
+      - "/Users/ruihirano/MyProjects/DeepSmashProject/data/keys:/root/.local/share/yuzu/keys"
+    environment:
+      - "YUZUEMU_PATH=/Users/xxx"
