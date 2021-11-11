@@ -2,14 +2,23 @@ version: '3'
 services:
   yuzu_emu:
     tty: true
-    runtime: nvidia
     image: yuzu_emu:latest
     container_name: yuzu_emu
     ports:
-      - "6081:80"
-      - "5902:5902"
+      - "6080:80"
+      - "5901:5901"
     volumes:
       - "/Users/ruihirano/MyProjects/DeepSmashProject/:/workspace"
       - "/Users/ruihirano/MyProjects/DeepSmashProject/data/keys:/root/.local/share/yuzu/keys"
+      - "/tmp/.X11-unix/:/tmp/.X11-unix:rw"
     environment:
       - "YUZUEMU_PATH=/Users/xxx"
+      - "QT_X11_NO_MITSHM=1"
+      - "DISPLAY=$DISPLAY"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu, graphics, display, utility, compute, video]
