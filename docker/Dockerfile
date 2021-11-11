@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.4.2-runtime-ubuntu20.04
+FROM nvidia/cudagl:11.4.2-runtime-ubuntu20.04
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV USER root
@@ -40,6 +40,7 @@ RUN git clone --recursive https://github.com/yuzu-emu/yuzu
 RUN mkdir /yuzu/build
 WORKDIR /yuzu/build
 RUN cmake .. -GNinja -DCMAKE_C_COMPILER=gcc-10 -DCMAKE_CXX_COMPILER=g++-10
+ENV LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64
 RUN ninja
 
 ############# for NVIDIA ##################

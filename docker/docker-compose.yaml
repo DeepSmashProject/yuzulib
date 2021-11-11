@@ -6,8 +6,8 @@ services:
     image: yuzu_emu:latest
     container_name: yuzu_emu
     ports:
-      - "6080:80"
-      - "5901:5901"
+      - "6081:80"
+      - "5902:5902"
     volumes:
       - "/Users/ruihirano/MyProjects/DeepSmashProject/:/workspace"
       - "/Users/ruihirano/MyProjects/DeepSmashProject/data/keys:/root/.local/share/yuzu/keys"
