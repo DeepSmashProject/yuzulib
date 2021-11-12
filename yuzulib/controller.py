@@ -16,6 +16,8 @@ class Controller:
         pyautogui.keyUp(button.value)
 
     def multi_press(self, buttons: List[Button], sec=None):
+        if len(buttons) == 0:
+            return
         with ExitStack() as stack:
             for i, button in enumerate(buttons):
                 if i == len(buttons)-1:

@@ -5,7 +5,6 @@ import time
 import subprocess
 import threading
 import os
-from PyQt5.QtCore import QProcess
 import os
 from pathlib import Path
 class Runner:
