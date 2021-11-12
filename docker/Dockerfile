@@ -90,8 +90,8 @@ RUN wget https://github.com/novnc/noVNC/archive/v1.1.0.zip && \
 # dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
 # related? https://github.com/Microsoft/WSL/issues/2016
 RUN apt-get install -y --no-install-recommends \
-    dbus-x11 \
-    libdbus-c++-1-0v5
+    dbus-x11
+#libdbus-c++-1-0v5
 
 ENV DISPLAY=:1
 
