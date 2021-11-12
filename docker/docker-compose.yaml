@@ -4,6 +4,7 @@ services:
     tty: true
     image: yuzu_emu:latest
     privileged: true
+    runtime: nvidia
     container_name: yuzu_emu
     ports:
       - "8081:8081"
@@ -13,10 +14,10 @@ services:
     environment:
       - "RESOLUTION=1280x720"
       - "VNCPASS=pass"
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu, graphics, display, utility, compute, video]
+    #deploy:
+    #  resources:
+    #    reservations:
+    #      devices:
+    #        - driver: nvidia
+    #          count: 1
+    #          capabilities: [gpu, graphics, display, utility, compute, video]
