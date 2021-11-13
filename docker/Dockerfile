@@ -123,8 +123,8 @@ ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPA
 ############ for Application ############
 # for pyautogui
 RUN apt -y install python3-tk python3-dev scrot vim
-RUN apt install -y --no-install-recommends ubuntu-desktop && \
-    apt install -y gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal
+#RUN apt install -y --no-install-recommends ubuntu-desktop && \
+#    apt install -y gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal
 
 WORKDIR /workspace
 COPY ./entrypoint.sh /entrypoint.sh
