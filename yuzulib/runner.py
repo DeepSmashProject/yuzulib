@@ -34,7 +34,8 @@ class Runner:
     def _take_screenshot(self):
         filename = "{}/screenshot.png".format(str(self.data_path))
         # delete screenshot
-        os.remove(filename)
+        if os.path.isfile(filename):
+            os.remove(filename)
 
         command = "scrot {} -u".format(filename)
         proc = subprocess.run(command, shell=True, executable='/bin/bash')
