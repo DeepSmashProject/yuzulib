@@ -4,3 +4,4 @@ mss
 pyautogui
 numpy
 python-xlib
+pynput

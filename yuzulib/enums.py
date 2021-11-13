@@ -1,4 +1,5 @@
 from enum import Enum
+from pynput.keyboard import Key
 
 class Button(Enum):
     """A single button on a PRO controller"""
@@ -12,10 +13,10 @@ class Button(Enum):
     BUTTON_R = "e"
     BUTTON_PLUS = "m"
     BUTTON_MINUS = "n"
-    BUTTON_D_UP = "up"
-    BUTTON_D_DOWN = "down"
-    BUTTON_D_LEFT = "left"
-    BUTTON_D_RIGHT = "right"
+    BUTTON_D_UP = Key.up
+    BUTTON_D_DOWN = Key.down
+    BUTTON_D_LEFT = Key.left
+    BUTTON_D_RIGHT = Key.right
     BUTTON_C_UP = "i"
     BUTTON_C_DOWN = "k"
     BUTTON_C_LEFT = "j"
@@ -24,4 +25,4 @@ class Button(Enum):
     BUTTON_S_DOWN = "s"
     BUTTON_S_LEFT = "a"
     BUTTON_S_RIGHT = "d"
-    BUTTON_MODIFIER = "shift"
+    BUTTON_MODIFIER = Key.shift
