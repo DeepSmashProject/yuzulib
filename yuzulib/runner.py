@@ -33,18 +33,25 @@ class Runner:
             print("Take screenshot successfully")
 
     def _run_game(self):
+        self._click_init_yuzu_help_menu()
         self._install_dlc()
         self._install_and_start_game()
         self._reset_game()
+
+    def _click_init_yuzu_help_menu(self):
+        ########## Init Yuzu Help Menu ##########
+        move_mouse(776, 383)
+        click_mouse(delay=1)
 
     def _install_dlc(self):
         print("Start Installing DLC")
         files = glob.glob(self.dlc_dir + "/*.nsp")
         dlc_str = ""
         for file in files:
-            dlc_str += file
+            dlc_str += str('"') + file + str('"')
             dlc_str += " "
             print(file)
+        time.sleep(5)
         
         ######## Install DLC File #########
         # Click Files menu
@@ -55,18 +62,18 @@ class Runner:
         click_mouse(delay=1)
         # Type dlc files
         for s in dlc_str:
-            press_key(s)
+            press_key(s, delay=0.001)
         time.sleep(1)
         # Click Open Button
-        move_mouse(885, 495) # Install Nand
+        move_mouse(885, 495) 
         click_mouse(delay=0.1)
-        click_mouse(delay=1)
+        click_mouse(delay=5)
         # Click Install Button
-        move_mouse(938, 463) # Install Nand
+        move_mouse(988, 467) 
         click_mouse(delay=1)
 
         print("Installing {} dlc files.".format(len(files)))
-        time.sleep(30) # Installing...
+        time.sleep(40) # Installing...
 
         # Click Finished Install Button
         move_mouse(676, 365) 
