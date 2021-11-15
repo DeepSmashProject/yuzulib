@@ -1,6 +1,6 @@
 from yuzulib import Controller, Runner, Button, Screen
 import time
-runner = Runner("", "", "")
+runner = Runner("", "")
 runner.run()
 
 controller = Controller()
