@@ -27,5 +27,8 @@ sleep 2
 
 echo 'running noVNC at http://localhost:8081/vnc.html?host=localhost&port=8081'
 
-# 3. start simulator
+# Run yuzu emulator
+/yuzu/build/bin/yuzu &
+
+# bash
 /bin/bash
