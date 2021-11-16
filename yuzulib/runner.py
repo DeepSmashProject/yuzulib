@@ -10,26 +10,22 @@ from .util import click_mouse, press_key, move_mouse, wait_screen, click_screen,
 from pynput import mouse, keyboard
 import glob
 class Runner:
-    def __init__(self, game_path, dlc_dir):
+    def __init__(self, game_path: str, dlc_dir: str, screen):
         self.data_path = Path(os.path.dirname(__file__)).joinpath('data/').resolve()
         self.game_path = game_path
         self.dlc_dir = dlc_dir
+        self.screen = screen
 
     def run(self):
-        self._take_screenshot()
+        left, top, width, height = self._get_screen_size()
+        self.screen.capture(left, top, width, height)
         self._run_game()
 
 
-    def _take_screenshot(self):
-        filename = "{}/screenshot.png".format(str(self.data_path))
-        # delete screenshot
-        if os.path.isfile(filename):
-            os.remove(filename)
-
-        command = "scrot {} -u".format(filename)
-        proc = subprocess.run(command, shell=True, executable='/bin/bash')
-        if proc.returncode == 0:
-            print("Take screenshot successfully")
+    def _get_screen_size(self):
+        (left, top, width, height) = pyautogui.locateOnScreen(str(self.data_path) + '/yuzu_screen.png', confidence=.7)
+        print("screen: ", left, top, width, height)
+        return left, top, width, height
 
     def _run_game(self):
         self._click_init_yuzu_help_menu()

@@ -14,9 +14,7 @@ class Screen:
         self.callback = callback
         self.fps = fps
 
-    def capture(self): 
-        (left, top, width, height) = pyautogui.locateOnScreen(str(self.data_path) + '/screenshot.png', confidence=.5)
-        print(left, top, width, height)
+    def capture(self, left, top, width, height): 
         mon = {'left': left, 'top': top, 'width': width, 'height': height}
         start = time.time()
 

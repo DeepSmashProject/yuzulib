@@ -13,6 +13,11 @@ print("Game Path: {}, DLC Dir: {}".format(args.game, args.dlc))
 if args.game == "" or args.dlc == "":
     print("Invalid argument")
     os.exit(1)
-runner = Runner(args.game, args.dlc)
+
+def callback(frame, fps):
+    pass
+screen = Screen(callback, fps=60)
+
+runner = Runner(args.game, args.dlc, screen)
 runner.run()
 
