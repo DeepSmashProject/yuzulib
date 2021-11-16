@@ -13,9 +13,13 @@ class Screen:
         self.data_path = Path(os.path.dirname(__file__)).joinpath('data/').resolve()
         self.callback = callback
         self.fps = fps
+        self.left, self.top, self.width, self.height = 0, 0, 0, 0
 
-    def capture(self, left, top, width, height): 
-        mon = {'left': left, 'top': top, 'width': width, 'height': height}
+    def set_window(self, left, top, width, height):
+        self.left, self.top, self.width, self.height = left, top, width, height
+
+    def capture(self): 
+        mon = {'left': self.left, 'top': self.top, 'width': self.width, 'height': self.height}
         start = time.time()
 
         with mss() as sct:

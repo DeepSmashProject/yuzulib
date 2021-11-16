@@ -12,3 +12,5 @@ screen = Screen(callback, fps=60)
 
 runner = Runner("", "", screen)
 runner.run()
+
+screen.capture()

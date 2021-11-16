@@ -18,7 +18,7 @@ class Runner:
 
     def run(self):
         left, top, width, height = self._get_screen_size()
-        self.screen.capture(left, top, width, height)
+        self.screen.set_window(left, top, width, height)
         self._run_game()
 
 
