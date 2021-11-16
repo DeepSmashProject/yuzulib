@@ -35,6 +35,7 @@ class Runner:
         self._click_init_yuzu_help_menu()
         self._install_dlc()
         self._install_and_start_game()
+        time.sleep(5)
         self._restart_game()
 
     def _click_init_yuzu_help_menu(self):
@@ -48,7 +49,7 @@ class Runner:
         for file in files:
             dlc_str += str('"') + file + str('"')
             dlc_str += " "
-        time.sleep(5)
+        time.sleep(1)
         
         ######## Install DLC File #########
         # Click Files menu
@@ -66,34 +67,17 @@ class Runner:
         # Click Open Button
         click_screen(Image.OPEN_BUTTON)
         click_screen(Image.OPEN_BUTTON)
-        #move_mouse(885, 495) 
-        #click_mouse(delay=0.1)
-        #click_mouse(delay=5)
-        # Click Install Button
 
         click_screen(Image.INSTALL_BUTTON)
-        #move_mouse(988, 467) 
-        #click_mouse(delay=1)
 
         print("Installing {} dlc files.".format(len(files)))
         click_screen(Image.OK_BUTTON)
-        #time.sleep(40) # Installing...
-
-        # Click Finished Install Button
-        #move_mouse(676, 365) 
-        #click_mouse(delay=1)
         print("Finished Install {} DLC Files".format(len(files)))
     
     def _install_and_start_game(self):
         print("Start Installing Game")
-        # Click Files menu
         click_screen(Image.MENU_FILE)
-        #move_mouse(226, 125)
-        #click_mouse(delay=0.1)
-        # Click Load File
         click_screen(Image.LOAD_FILE)
-        #move_mouse(226, 185)
-        #click_mouse(delay=1)
 
         # in File Select
         # ex_str = "/workspace/games/SSBU/Super Smash Bros Ultimate [v0].nsp"
@@ -104,28 +88,15 @@ class Runner:
         # Click File Open Button
         click_screen(Image.OPEN_BUTTON)
         click_screen(Image.OPEN_BUTTON)
-        #move_mouse(885, 495)
-        #click_mouse(delay=0.1)
-        #click_mouse(delay=1)
-        # Click Install Button
-        click_screen(Image.INSTALL_BUTTON)
-        #move_mouse(711, 416)
-        #click_mouse(delay=1)
         
         print("Installing game file: {}.".format(self.game_path))
-        #time.sleep(30) # Waiting Load App
-        #print("Finished Install Game File: {}.".format(self.game_path))
     
     def _restart_game(self):
         print("Reset Game")
         # Click Emulator menu
         click_screen(Image.MENU_EMULATION)
-        #move_mouse(287, 125)
-        #click_mouse(delay=0.1)
         # Reset Game
         click_screen(Image.RESTART)
-        #move_mouse(287, 224)
-        #click_mouse(delay=1)
 
     
 if __name__ == '__main__':
