@@ -9,7 +9,6 @@ from pathlib import Path
 from .util import click_mouse, press_key, move_mouse, wait_screen, click_screen, Image
 from pynput import mouse, keyboard
 import glob
-import asyncio
 class Runner:
     def __init__(self, game_path: str, dlc_dir: str, screen):
         self.data_path = Path(os.path.dirname(__file__)).joinpath('data/').resolve()
@@ -19,7 +18,8 @@ class Runner:
 
     def run(self):
         left, top, width, height = self._get_screen_size()
-        asyncio.run(self.screen.capture(left, top, width, height))
+        self.screen.set_window(left, top, width, height)
+        self.screen.run()
         self._run_game()
 
 

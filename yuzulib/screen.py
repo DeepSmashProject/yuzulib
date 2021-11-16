@@ -8,17 +8,22 @@ from threading import (Event, Thread)
 import pyautogui
 import os
 from pathlib import Path
+import threading
 class Screen:
     def __init__(self, callback, fps=None):
         self.data_path = Path(os.path.dirname(__file__)).joinpath('data/').resolve()
         self.callback = callback
         self.fps = fps
-        self.left, self.top, self.width, self.height = 0, 0, 0, 0
+        self.left, self.top, self.width, self.height = None, None, None, None
 
-    #def set_window(self, left, top, width, height):
-    #    self.left, self.top, self.width, self.height = left, top, width, height
+    def set_window(self, left, top, width, height):
+        self.left, self.top, self.width, self.height = left, top, width, height
 
-    async def capture(self): 
+    def run(self):
+        thread = threading.Thread(target=self.capture)
+        thread.start()
+
+    def capture(self): 
         mon = {'left': self.left, 'top': self.top, 'width': self.width, 'height': self.height}
         start = time.time()
 
