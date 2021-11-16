@@ -15,10 +15,10 @@ class Screen:
         self.fps = fps
         self.left, self.top, self.width, self.height = 0, 0, 0, 0
 
-    def set_window(self, left, top, width, height):
-        self.left, self.top, self.width, self.height = left, top, width, height
+    #def set_window(self, left, top, width, height):
+    #    self.left, self.top, self.width, self.height = left, top, width, height
 
-    def capture(self): 
+    async def capture(self): 
         mon = {'left': self.left, 'top': self.top, 'width': self.width, 'height': self.height}
         start = time.time()
 

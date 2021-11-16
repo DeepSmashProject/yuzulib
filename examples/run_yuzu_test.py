@@ -21,5 +21,3 @@ screen = Screen(callback, fps=60)
 runner = Runner(args.game, args.dlc, screen)
 runner.run()
 
-screen.capture()
-
