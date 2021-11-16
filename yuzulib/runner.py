@@ -5,9 +5,8 @@ import time
 import subprocess
 import threading
 import os
-import os
 from pathlib import Path
-from .util import click_mouse, press_key, move_mouse
+from .util import click_mouse, press_key, move_mouse, wait_screen, click_screen, Image
 from pynput import mouse, keyboard
 import glob
 class Runner:
@@ -36,12 +35,11 @@ class Runner:
         self._click_init_yuzu_help_menu()
         self._install_dlc()
         self._install_and_start_game()
-        self._reset_game()
+        self._restart_game()
 
     def _click_init_yuzu_help_menu(self):
         ########## Init Yuzu Help Menu ##########
-        move_mouse(776, 383)
-        click_mouse(delay=1)
+        click_screen(Image.INIT_YUZU)
 
     def _install_dlc(self):
         print("Start Installing DLC")
@@ -50,44 +48,52 @@ class Runner:
         for file in files:
             dlc_str += str('"') + file + str('"')
             dlc_str += " "
-            print(file)
         time.sleep(5)
         
         ######## Install DLC File #########
         # Click Files menu
-        move_mouse(226, 125)
-        click_mouse(delay=0.1)
+        click_screen(Image.MENU_FILE)
+        #move_mouse(226, 125)
+        #click_mouse(delay=0.1)
         # Click Install Nand
-        move_mouse(226, 153)
-        click_mouse(delay=1)
+        click_screen(Image.INSTALL_FILES_TO_NAND)
+        #move_mouse(226, 153)
+        #click_mouse(delay=1)
         # Type dlc files
         for s in dlc_str:
             press_key(s, delay=0.001)
         time.sleep(1)
         # Click Open Button
-        move_mouse(885, 495) 
-        click_mouse(delay=0.1)
-        click_mouse(delay=5)
+        click_screen(Image.OPEN_BUTTON)
+        click_screen(Image.OPEN_BUTTON)
+        #move_mouse(885, 495) 
+        #click_mouse(delay=0.1)
+        #click_mouse(delay=5)
         # Click Install Button
-        move_mouse(988, 467) 
-        click_mouse(delay=1)
+
+        click_screen(Image.INSTALL_BUTTON)
+        #move_mouse(988, 467) 
+        #click_mouse(delay=1)
 
         print("Installing {} dlc files.".format(len(files)))
-        time.sleep(40) # Installing...
+        click_screen(Image.OK_BUTTON)
+        #time.sleep(40) # Installing...
 
         # Click Finished Install Button
-        move_mouse(676, 365) 
-        click_mouse(delay=1)
+        #move_mouse(676, 365) 
+        #click_mouse(delay=1)
         print("Finished Install {} DLC Files".format(len(files)))
     
     def _install_and_start_game(self):
         print("Start Installing Game")
         # Click Files menu
-        move_mouse(226, 125)
-        click_mouse(delay=0.1)
+        click_screen(Image.MENU_FILE)
+        #move_mouse(226, 125)
+        #click_mouse(delay=0.1)
         # Click Load File
-        move_mouse(226, 185)
-        click_mouse(delay=1)
+        click_screen(Image.LOAD_FILE)
+        #move_mouse(226, 185)
+        #click_mouse(delay=1)
 
         # in File Select
         # ex_str = "/workspace/games/SSBU/Super Smash Bros Ultimate [v0].nsp"
@@ -96,25 +102,30 @@ class Runner:
         time.sleep(1)
         
         # Click File Open Button
-        move_mouse(885, 495)
-        click_mouse(delay=0.1)
-        click_mouse(delay=1)
+        click_screen(Image.OPEN_BUTTON)
+        click_screen(Image.OPEN_BUTTON)
+        #move_mouse(885, 495)
+        #click_mouse(delay=0.1)
+        #click_mouse(delay=1)
         # Click Install Button
-        move_mouse(711, 416)
-        click_mouse(delay=1)
+        click_screen(Image.INSTALL_BUTTON)
+        #move_mouse(711, 416)
+        #click_mouse(delay=1)
         
         print("Installing game file: {}.".format(self.game_path))
-        time.sleep(30) # Waiting Load App
-        print("Finished Install Game File: {}.".format(self.game_path))
+        #time.sleep(30) # Waiting Load App
+        #print("Finished Install Game File: {}.".format(self.game_path))
     
-    def _reset_game(self):
+    def _restart_game(self):
         print("Reset Game")
         # Click Emulator menu
-        move_mouse(287, 125)
-        click_mouse(delay=0.1)
+        click_screen(Image.MENU_EMULATION)
+        #move_mouse(287, 125)
+        #click_mouse(delay=0.1)
         # Reset Game
-        move_mouse(287, 224)
-        click_mouse(delay=1)
+        click_screen(Image.RESTART)
+        #move_mouse(287, 224)
+        #click_mouse(delay=1)
 
     
 if __name__ == '__main__':
