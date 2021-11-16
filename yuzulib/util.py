@@ -21,7 +21,7 @@ def press_key(key: str, delay: int = 0):
     k.release(key)
     time.sleep(delay)
 
-def wait_screen(filepath: str, interval=1, confidence=.8):
+def wait_screen(filepath: str, interval=1, confidence=.7):
     while True:
         location = pyautogui.locateOnScreen(filepath, confidence=confidence)
         if location != None:
@@ -29,7 +29,7 @@ def wait_screen(filepath: str, interval=1, confidence=.8):
             return location
         time.sleep(interval)
 
-def click_screen(image, interval=1, confidence=.8):
+def click_screen(image, interval=1, confidence=.7):
     location = None
     while True:
         location = pyautogui.locateOnScreen(image.value, confidence=confidence)
