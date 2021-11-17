@@ -10,23 +10,23 @@ from .util import click_mouse, press_key, move_mouse, wait_screen, click_screen,
 from pynput import mouse, keyboard
 import glob
 class Runner:
-    def __init__(self, game_path: str, dlc_dir: str, screen):
+    def __init__(self, game_path: str, dlc_dir: str):
         self.data_path = Path(os.path.dirname(__file__)).joinpath('data/').resolve()
         self.game_path = game_path
         self.dlc_dir = dlc_dir
-        self.screen = screen
+        #self.screen = screen
 
     def run(self):
-        left, top, width, height = self._get_screen_size()
-        self.screen.set_window(left, top, width, height)
-        self.screen.run()
+        #left, top, width, height = self._get_screen_size()
+        #self.screen.set_window(left, top, width, height)
+        #self.screen.run()
         self._run_game()
 
 
-    def _get_screen_size(self):
-        (left, top, width, height) = pyautogui.locateOnScreen(str(self.data_path) + '/yuzu_screen.png', confidence=.7)
-        print("screen: ", left, top, width, height)
-        return left, top, width, height
+    #def _get_screen_size(self):
+    #    (left, top, width, height) = pyautogui.locateOnScreen(str(self.data_path) + '/yuzu_screen.png', confidence=.7)
+    #    print("screen: ", left, top, width, height)
+    #    return left, top, width, height
 
     def _run_game(self):
         self._click_init_yuzu_help_menu()

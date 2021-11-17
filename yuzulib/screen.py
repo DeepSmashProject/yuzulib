@@ -9,22 +9,41 @@ import pyautogui
 import os
 from pathlib import Path
 import threading
+import subprocess
 class Screen:
     def __init__(self, callback, fps=None):
         self.data_path = Path(os.path.dirname(__file__)).joinpath('data/').resolve()
         self.callback = callback
         self.fps = fps
-        self.left, self.top, self.width, self.height = None, None, None, None
+        self.screen_size = self.get_screen_size()
+        #self.left, self.top, self.width, self.height = None, None, None, None
 
-    def set_window(self, left, top, width, height):
-        self.left, self.top, self.width, self.height = left, top, width, height
+    def _take_screenshot(self):
+        filename = "{}/screen.png".format(str(self.data_path))
+        # delete screenshot
+        os.remove(filename)
+
+        command = "scrot {} -u".format(filename)
+        proc = subprocess.run(command, shell=True, executable='/bin/bash')
+        if proc.returncode == 0:
+            print("Take screenshot successfully")
+        return filename
+
+    def get_screen_size(self):
+        filename = self._take_screenshot()
+        (left, top, width, height) = pyautogui.locateOnScreen(filename, confidence=.7)
+        print("screen: ", left, top, width, height)
+        return {"left": left, "top": top, "width": width, "height": height}
+
+    #def set_window(self, left, top, width, height):
+    #    self.left, self.top, self.width, self.height = left, top, width, height
 
     def run(self):
         thread = threading.Thread(target=self.capture)
         thread.start()
 
     def capture(self): 
-        mon = {'left': self.left, 'top': self.top, 'width': self.width, 'height': self.height}
+        mon = {'left': self.screen_size["left"], 'top': self.screen_size["top"], 'width': self.screen_size["width"], 'height': self.screen_size["height"]}
         start = time.time()
 
         with mss() as sct:

@@ -17,7 +17,8 @@ if args.game == "" or args.dlc == "":
 def callback(frame, fps):
     print("callback!", frame[0][0], fps)
 screen = Screen(callback, fps=60)
+screen.run()
 
-runner = Runner(args.game, args.dlc, screen)
+runner = Runner(args.game, args.dlc)
 runner.run()
 
