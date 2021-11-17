@@ -52,3 +52,6 @@ class Image(Enum):
     OPEN_BUTTON = "{}/open_button.png".format(str(data_path))
     INSTALL_BUTTON = "{}/install_button.png".format(str(data_path))
     OK_BUTTON = "{}/ok_button.png".format(str(data_path))
+    YUZU_SCREEN = "{}/yuzu_screen.png".format(str(data_path))
+    TOP_BAR = "{}/top_bar.png".format(str(data_path))
+    BOTTOM_BAR = "{}/bottom_bar.png".format(str(data_path))

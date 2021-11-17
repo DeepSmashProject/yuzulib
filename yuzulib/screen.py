@@ -3,7 +3,7 @@ import cv2
 #from PIL import ImageGrab
 import time
 from mss import mss
-from PIL import Image
+from .util import Image
 from threading import (Event, Thread)
 import pyautogui
 import os
@@ -19,7 +19,7 @@ class Screen:
         self.alive = True
 
     def _take_screenshot(self):
-        filename = "{}/screen.png".format(str(self.data_path))
+        filename = Image.YUZU_SCREEN.value
         # delete screenshot
         if os.path.isfile(filename):
             os.remove(filename)
@@ -31,8 +31,11 @@ class Screen:
         return filename
 
     def get_screen_size(self):
-        filename = self._take_screenshot()
-        (left, top, width, height) = pyautogui.locateOnScreen(filename, confidence=.7)
+        self._take_screenshot()
+        (yuzu_left, yuzu_top, yuzu_width, yuzu_height) = pyautogui.locateOnScreen(Image.YUZU_SCREEN.value, confidence=.7)
+        (_, _, _, tb_height) = pyautogui.locateOnScreen(Image.TOP_BAR.value, confidence=.7)
+        (_, _, _, bb_height) = pyautogui.locateOnScreen(Image.BOTTOM_BAR.value, confidence=.7)
+        left, top, width, height = yuzu_left, yuzu_top+tb_height, yuzu_width, yuzu_height-tb_height-bb_height
         print("screen: ", left, top, width, height)
         return {"left": left, "top": top, "width": width, "height": height}
 
