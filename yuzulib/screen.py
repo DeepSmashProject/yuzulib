@@ -16,6 +16,7 @@ class Screen:
         self.callback = callback
         self.fps = fps
         self.screen_size = self.get_screen_size()
+        self.alive = True
 
     def _take_screenshot(self):
         filename = "{}/screen.png".format(str(self.data_path))
@@ -44,7 +45,7 @@ class Screen:
         start = time.time()
 
         with mss() as sct:
-            while True:
+            while self.alive:
                 img = sct.grab(mon)
                 frame = np.array(img)
                 if cv2.waitKey(33) & 0xFF in (ord('q'), 27):
@@ -62,6 +63,9 @@ class Screen:
                 fps = 1/elapsed_time
                 start = time.time()
                 self.callback(frame, fps)
+
+    def close(self):
+        self.alive = False
 
 
 if __name__ == '__main__':
