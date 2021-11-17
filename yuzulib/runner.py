@@ -14,19 +14,9 @@ class Runner:
         self.data_path = Path(os.path.dirname(__file__)).joinpath('data/').resolve()
         self.game_path = game_path
         self.dlc_dir = dlc_dir
-        #self.screen = screen
 
     def run(self):
-        #left, top, width, height = self._get_screen_size()
-        #self.screen.set_window(left, top, width, height)
-        #self.screen.run()
         self._run_game()
-
-
-    #def _get_screen_size(self):
-    #    (left, top, width, height) = pyautogui.locateOnScreen(str(self.data_path) + '/yuzu_screen.png', confidence=.7)
-    #    print("screen: ", left, top, width, height)
-    #    return left, top, width, height
 
     def _run_game(self):
         self._click_init_yuzu_help_menu()

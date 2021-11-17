@@ -16,7 +16,6 @@ class Screen:
         self.callback = callback
         self.fps = fps
         self.screen_size = self.get_screen_size()
-        #self.left, self.top, self.width, self.height = None, None, None, None
 
     def _take_screenshot(self):
         filename = "{}/screen.png".format(str(self.data_path))
@@ -35,9 +34,6 @@ class Screen:
         (left, top, width, height) = pyautogui.locateOnScreen(filename, confidence=.7)
         print("screen: ", left, top, width, height)
         return {"left": left, "top": top, "width": width, "height": height}
-
-    #def set_window(self, left, top, width, height):
-    #    self.left, self.top, self.width, self.height = left, top, width, height
 
     def run(self):
         thread = threading.Thread(target=self.capture)
