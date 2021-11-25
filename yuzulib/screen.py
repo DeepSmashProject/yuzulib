@@ -33,20 +33,20 @@ class Screen:
 
     def get_screen_size(self):
         #self._take_screenshot()
-        (yuzu_left, yuzu_top, yuzu_width, yuzu_height) = self.get_locate_on_screen(Image.YUZU_SCREEN, take_screen=True)
-        (_, _, _, tb_height) = self.get_locate_on_screen(Image.TOP_BAR)
-        (_, _, _, bb_height) = self.get_locate_on_screen(Image.BOTTOM_BAR)
+        (yuzu_left, yuzu_top, yuzu_width, yuzu_height) = self.get_locate_on_screen(Image.YUZU_SCREEN, confidence=.9, take_screen=True)
+        (_, _, _, tb_height) = self.get_locate_on_screen(Image.TOP_BAR, confidence=.8)
+        (_, _, _, bb_height) = self.get_locate_on_screen(Image.BOTTOM_BAR, confidence=.8)
         left, top, width, height = yuzu_left, yuzu_top+tb_height, yuzu_width, yuzu_height-tb_height-bb_height
         print("screen: ", left, top, width, height)
         return {"left": left, "top": top, "width": width, "height": height}
 
-    def get_locate_on_screen(self, image, take_screen=False):
+    def get_locate_on_screen(self, image, confidence=.9, take_screen=False):
         count = 0
         while True:
             count += 1
             if take_screen and count % 10 == 0:
                 self._take_screenshot()
-            result = pyautogui.locateOnScreen(image.value, confidence=.9)
+            result = pyautogui.locateOnScreen(image.value, confidence=confidence)
             if result != None:
                 return result
 
@@ -70,7 +70,7 @@ class Screen:
                 if self.fps != None:
                     target_elapsed_time = 1/self.fps
                     if target_elapsed_time < elapsed_time:
-                        print("warning: low fps")
+                        print("warning: low fps {}".format(1/elapsed_time))
                     else:
                         time.sleep(target_elapsed_time-elapsed_time)
                     elapsed_time = time.time() - start
