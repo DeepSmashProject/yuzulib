@@ -8,9 +8,11 @@ services:
     container_name: yuzu_emu
     ports:
       - "8081:8081"
+      - "6006:6006"
     volumes:
       - "/Users/ruihirano/MyProjects/DeepSmashProject/:/workspace"
-      - "/Users/ruihirano/MyProjects/DeepSmashProject/data/keys:/root/.local/share/yuzu/keys"
+      - "/Users/ruihirano/MyProjects/DeepSmashProject/data/keys:/root/.local/sh\
+        are/yuzu/keys"
     environment:
       - "RESOLUTION=1280x720"
       - "VNCPASS=pass"
