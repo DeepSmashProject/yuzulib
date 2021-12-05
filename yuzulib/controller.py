@@ -39,8 +39,6 @@ class Controller:
             if sec != None:
                 time.sleep(sec)
             self.keyboard.release(button.value)
-            if wait != None:
-                time.sleep(wait)
 
     def press(self, button: Button, hold=False, sec=None, wait=None):
         change = self._check_hold(hold, [button])
@@ -63,6 +61,8 @@ class Controller:
         if change:
             thread = threading.Thread(target=self._multi_press, args=(buttons, hold, sec, wait))
             thread.start()
+        if wait != None:
+            time.sleep(wait)
 
     def release(self, button: Button):
         pyautogui.keyUp(button.value)
