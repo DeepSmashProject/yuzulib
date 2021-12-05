@@ -11,13 +11,15 @@ class Controller:
         self.keyboard = Con()
         self.press(Button.BUTTON_MODIFIER)
 
-    def press(self, button: Button, sec=None):
+    def press(self, button: Button, sec=None, wait=None):
         self.keyboard.press(button.value)
         if sec != None:
             time.sleep(sec)
         self.keyboard.release(button.value)
+        if wait != None:
+            time.sleep(wait)
 
-    def multi_press(self, buttons: List[Button], sec=None):
+    def multi_press(self, buttons: List[Button], sec=None, wait=None):
         if len(buttons) == 0:
             return
         with ExitStack() as stack:
@@ -25,7 +27,7 @@ class Controller:
                 if i == len(buttons)-1:
                     break
                 stack.enter_context(self.keyboard.pressed(button.value))
-            self.press(buttons[len(buttons)-1], sec)
+            self.press(buttons[len(buttons)-1], sec, wait)
 
     def hold(self, button: Button):
         pyautogui.keyDown(button.value)
