@@ -6,7 +6,7 @@ import subprocess
 import threading
 import os
 from pathlib import Path
-from .util import click_mouse, press_key, move_mouse, wait_screen, click_screen, Image
+from .util import click_mouse, press_key, move_mouse, wait_screen, click_screen, Image, is_exist_screen
 from pynput import mouse, keyboard
 import glob
 class Runner:
@@ -27,7 +27,8 @@ class Runner:
 
     def _click_init_yuzu_help_menu(self):
         ########## Init Yuzu Help Menu ##########
-        click_screen(Image.INIT_YUZU)
+        if is_exist_screen(Image.INIT_SCREEN):
+            click_screen(Image.INIT_YES)
 
     def _install_dlc(self):
         print("Start Installing DLC")

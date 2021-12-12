@@ -5,3 +5,5 @@ pyautogui
 numpy
 python-xlib
 pynput
+flask_cors
+flask

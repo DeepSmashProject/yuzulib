@@ -4,7 +4,7 @@ import cv2
 import time
 from mss import mss
 from numpy.core.fromnumeric import take
-from .util import Image
+from .util import Image, click_screen, is_exist_screen
 from threading import (Event, Thread)
 import pyautogui
 import os
@@ -12,43 +12,37 @@ from pathlib import Path
 import threading
 import subprocess
 class Screen:
-    def __init__(self, callback, fps=None):
+    def __init__(self, callback, fps=None, disable_warning=False):
+        self.disable_warning = disable_warning
         self.data_path = Path(os.path.dirname(__file__)).joinpath('data/').resolve()
         self.callback = callback
         self.fps = fps
         self.screen_size = self.get_screen_size()
         self.alive = True
 
-    def _take_screenshot(self):
-        filename = Image.YUZU_SCREEN.value
-        # delete screenshot
-        if os.path.isfile(filename):
-            os.remove(filename)
-
-        command = "scrot {} -u".format(filename)
-        proc = subprocess.run(command, shell=True, executable='/bin/bash')
-        if proc.returncode == 0:
-            print("Take screenshot successfully")
-        return filename
+    def click_init_yuzu(self):
+        if is_exist_screen(Image.INIT_SCREEN):
+            click_screen(Image.INIT_YES)
 
     def get_screen_size(self):
+        self.click_init_yuzu()
         #self._take_screenshot()
-        (yuzu_left, yuzu_top, yuzu_width, yuzu_height) = self.get_locate_on_screen(Image.YUZU_SCREEN, confidence=.9, take_screen=True)
+        (yuzu_left, yuzu_top, yuzu_width, yuzu_height) = self.get_locate_on_screen(Image.YUZU_SCREEN, confidence=.9)
         (_, _, _, tb_height) = self.get_locate_on_screen(Image.TOP_BAR, confidence=.8)
         (_, _, _, bb_height) = self.get_locate_on_screen(Image.BOTTOM_BAR, confidence=.8)
         left, top, width, height = yuzu_left, yuzu_top+tb_height, yuzu_width, yuzu_height-tb_height-bb_height
         print("screen: ", left, top, width, height)
         return {"left": left, "top": top, "width": width, "height": height}
 
-    def get_locate_on_screen(self, image, confidence=.9, take_screen=False):
+    def get_locate_on_screen(self, image, confidence=.9):
         count = 0
         while True:
-            count += 1
-            if take_screen and count % 10 == 0:
-                self._take_screenshot()
+            #if take_screen and count % 10 == 0:
+            #    self._take_screenshot()
             result = pyautogui.locateOnScreen(image.value, confidence=confidence)
             if result != None:
                 return result
+            count += 1
 
     def run(self):
         thread = threading.Thread(target=self.capture)
@@ -70,7 +64,8 @@ class Screen:
                 if self.fps != None:
                     target_elapsed_time = 1/self.fps
                     if target_elapsed_time < elapsed_time:
-                        print("warning: low fps {}".format(1/elapsed_time))
+                        if not self.disable_warning:
+                            print("warning: low fps {}".format(1/elapsed_time))
                     else:
                         time.sleep(target_elapsed_time-elapsed_time)
                     elapsed_time = time.time() - start

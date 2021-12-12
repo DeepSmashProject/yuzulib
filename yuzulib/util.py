@@ -41,9 +41,15 @@ def click_screen(image, interval=1, confidence=.7):
     move_mouse(point.x, point.y)
     click_mouse(delay=1)
 
+def is_exist_screen(image, confidence=.7):
+    location = pyautogui.locateOnScreen(image.value, confidence=confidence)
+    if location != None:
+        return True
+    return False
 
 class Image(Enum):
-    INIT_YUZU = "{}/init_yuzu.png".format(str(data_path))
+    INIT_YES = "{}/init_yes.png".format(str(data_path))
+    INIT_SCREEN = "{}/init_screen.png".format(str(data_path))
     MENU_FILE = "{}/menu_file.png".format(str(data_path))
     INSTALL_FILES_TO_NAND = "{}/install_files_to_nand.png".format(str(data_path))
     LOAD_FILE = "{}/load_file.png".format(str(data_path))

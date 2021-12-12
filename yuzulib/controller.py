@@ -56,7 +56,6 @@ class Controller:
             last_button = buttons[len(buttons)-1]
             self.keyboard.press(last_button.value)
             if self.data["hold"]:
-                print("hold")
                 self.unhold_event.wait()
                 self.unhold_event.clear()
                 self.keyboard.release(last_button.value)
