@@ -13,22 +13,22 @@ class Client:
     def wait_server(self):
         pass
 
-    def run_screen(self, callback, fps=15, render=False):
+    def run_screen(self, callback, fps=15, render=False, width=256, height=256):
         print("run screen")
-        url = '{}/screen'.format(self.address)
+        url = '{}/screen/'.format(self.address)
         if self.disable_warning:
-            url = '{}/screen?disable_warning=true'.format(self.address)
+            url = '{}/screen/?disable_warning=true'.format(self.address)
         res = requests.post(url)
         time.sleep(1)
-        self._stream_screen(callback, fps=fps, render=render)
+        self._stream_screen(callback, fps=fps, render=render, width=width, height=height)
 
-    def _stream_screen(self, callback, fps=15, render=False):
+    def _stream_screen(self, callback, fps=15, render=False, width=256, height=256):
         fig,ax = plt.subplots(1,1)
         first_plot = True
         im = None
 
         start = time.time()
-        url = '{}/screen'.format(self.address)
+        url = '{}/screen/?width={}&height={}'.format(self.address, width, height)
         while True:
             res = requests.get(url)
             elapsed_time = time.time() - start
@@ -43,8 +43,7 @@ class Client:
                 print("Error")
                 break
             start = time.time()
-            frame = res.json()["frame"]
-            frame = np.array(frame)[:, :, :3].astype(np.uint8)
+            frame = np.array(res.json()["frame"]).astype(np.uint8)
             # rendering
             if render:
                 if first_plot:
@@ -57,8 +56,18 @@ class Client:
 
             callback(frame, 1/elapsed_time)
 
-    def press(self, buttons: List[Button]):
+    def press(self, buttons: List[Button], hold=False, sec=0, wait=0):
         url = '{}/controller/press'.format(self.address)
-        payload = {}
-        params = {}
+        buttons = [bt.name for bt in buttons]
+        payload = {"buttons": buttons}
+        params = {"hold": hold, "sec": sec, "wait": wait}
+        res = requests.post(url, json=payload, params=params)
+
+    def run_game(self, game_path: str, dlc_dir: str):
+        url = '{}/runner/run_game'.format(self.address)
+        payload = {"game_path": game_path, "dlc_dir": dlc_dir}
+        res = requests.post(url, json=payload)
+
+    def reset_game(self):
+        url = '{}/runner/reset_game'.format(self.address)
         res = requests.post(url)

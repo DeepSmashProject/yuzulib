@@ -10,19 +10,17 @@ from .util import click_mouse, press_key, move_mouse, wait_screen, click_screen,
 from pynput import mouse, keyboard
 import glob
 class Runner:
-    def __init__(self, game_path: str, dlc_dir: str):
+    def __init__(self):
         self.data_path = Path(os.path.dirname(__file__)).joinpath('data/').resolve()
-        self.game_path = game_path
-        self.dlc_dir = dlc_dir
 
-    def run(self):
-        self._run_game()
-
-    def _run_game(self):
+    def run_game(self, game_path: str, dlc_dir: str):
         self._click_init_yuzu_help_menu()
-        self._install_dlc()
-        self._install_and_start_game()
+        self._install_dlc(dlc_dir)
+        self._install_and_start_game(game_path)
         time.sleep(5)
+        self._restart_game()
+
+    def reset_game(self):
         self._restart_game()
 
     def _click_init_yuzu_help_menu(self):
@@ -30,9 +28,9 @@ class Runner:
         if is_exist_screen(Image.INIT_SCREEN):
             click_screen(Image.INIT_YES)
 
-    def _install_dlc(self):
+    def _install_dlc(self, dlc_dir):
         print("Start Installing DLC")
-        files = glob.glob(self.dlc_dir + "/*.nsp")
+        files = glob.glob(dlc_dir + "/*.nsp")
         dlc_str = ""
         for file in files:
             dlc_str += str('"') + file + str('"')
@@ -62,14 +60,14 @@ class Runner:
         click_screen(Image.OK_BUTTON)
         print("Finished Install {} DLC Files".format(len(files)))
     
-    def _install_and_start_game(self):
+    def _install_and_start_game(self, game_path):
         print("Start Installing Game")
         click_screen(Image.MENU_FILE)
         click_screen(Image.LOAD_FILE)
 
         # in File Select
         # ex_str = "/workspace/games/SSBU/Super Smash Bros Ultimate [v0].nsp"
-        for s in self.game_path:
+        for s in game_path:
             press_key(s)
         time.sleep(1)
         
@@ -77,7 +75,7 @@ class Runner:
         click_screen(Image.OPEN_BUTTON)
         click_screen(Image.OPEN_BUTTON)
         
-        print("Installing game file: {}.".format(self.game_path))
+        print("Installing game file: {}.".format(game_path))
     
     def _restart_game(self):
         print("Reset Game")

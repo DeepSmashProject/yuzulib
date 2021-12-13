@@ -8,3 +8,4 @@ pynput
 flask_cors
 flask
 matplotlib
+flask_classful
