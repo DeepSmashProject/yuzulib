@@ -97,15 +97,15 @@ class Server:
     def __init__(self, host, port) -> None:
         self.host = host
         self.port = port
+        self.app = Flask(__name__)
+        CORS(self.app) #Cross Origin Resource Sharing
+        ControllerView.register(self.app)
+        ScreenView.register(self.app)
+        RunnerView.register(self.app)
 
     def run(self):
-        app = Flask(__name__)
-        CORS(app) #Cross Origin Resource Sharing
-        ControllerView.register(app)
-        ScreenView.register(app)
-        RunnerView.register(app)
-        app.debug = False
-        app.run(host=self.host, port=self.port)
+        self.app.debug = False
+        self.app.run(host=self.host, port=self.port)
 
 if __name__ == '__main__':
     server = Server(host='0.0.0.0', port=6000)

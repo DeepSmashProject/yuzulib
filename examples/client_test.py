@@ -25,7 +25,7 @@ def run_game_test():
     #client.reset_game()
 
 if __name__ == "__main__":
-    show_screen()
-    #run_game_test()
+    #show_screen()
+    run_game_test()
     # TODO: async callback
     # TODO: RunnerView

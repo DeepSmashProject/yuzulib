@@ -9,6 +9,7 @@ docker run --privileged -it --rm --gpus all \
   -e NOVNC_PORT=8082 \
   -e API_PORT=6000 \
   -e API_HOST=0.0.0.0 \
+  -e API_FILE_PATH=/workspace/yuzulib/run_server.py \
   -v "/home/ruirui_nis/workspace/DeepSmashProject:/workspace" \
   -v "/mnt/bigdata/00_students/ruirui_nis/DeepSmashProject/games:/workspace/games" \
   -v "/mnt/bigdata/00_students/ruirui_nis/DeepSmashProject/keys:/root/.local/share/yuzu/keys" \
