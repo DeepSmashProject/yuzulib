@@ -27,7 +27,7 @@ class Screen:
     def get_screen_size(self):
         self.click_init_yuzu()
         #self._take_screenshot()
-        (yuzu_left, yuzu_top, yuzu_width, yuzu_height) = self.get_locate_on_screen(Image.YUZU_SCREEN, confidence=.9)
+        (yuzu_left, yuzu_top, yuzu_width, yuzu_height) = self.get_locate_on_screen(Image.YUZU_SCREEN, confidence=.95)
         (_, _, _, tb_height) = self.get_locate_on_screen(Image.TOP_BAR, confidence=.8)
         (_, _, _, bb_height) = self.get_locate_on_screen(Image.BOTTOM_BAR, confidence=.8)
         left, top, width, height = yuzu_left, yuzu_top+tb_height, yuzu_width, yuzu_height-tb_height-bb_height

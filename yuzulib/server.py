@@ -49,7 +49,7 @@ def run_screen():
     disable_warning = request.args.get('disable_warning', False)
     disable_warning = True if disable_warning == "true" else False
     def callback(frame, fps):
-        screen_data["frame"] = np.array(frame).tolist()
+        screen_data["frame"] = np.array(frame)[:100,:100].tolist()
         screen_data["fps"] = fps
 
     screen = Screen(callback, fps=fps, disable_warning=disable_warning)

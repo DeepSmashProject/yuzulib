@@ -7,3 +7,4 @@ python-xlib
 pynput
 flask_cors
 flask
+matplotlib

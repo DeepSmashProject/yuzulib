@@ -1,0 +1,1 @@
+docker push deepsmash/yuzu_emu:latest 

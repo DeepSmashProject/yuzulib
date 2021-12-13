@@ -16,10 +16,4 @@ services:
     environment:
       - "RESOLUTION=1280x720"
       - "VNCPASS=pass"
-    #deploy:
-    #  resources:
-    #    reservations:
-    #      devices:
-    #        - driver: nvidia
-    #          count: 1
-    #          capabilities: [gpu, graphics, display, utility, compute, video]
+      - "DISPLAY=:1"

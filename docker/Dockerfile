@@ -93,7 +93,7 @@ RUN apt-get install -y --no-install-recommends \
     dbus-x11
 #libdbus-c++-1-0v5
 
-ENV DISPLAY=:1
+#ENV DISPLAY=:1
 
 ######### Install and Build yuzu #############\
 RUN apt update && apt install -y sudo && \

@@ -1,1 +1,1 @@
-docker build -t yuzu_emu:latest . 
+docker build -t deepsmash/yuzu_emu:latest . 
