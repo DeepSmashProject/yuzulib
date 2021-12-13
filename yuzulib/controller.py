@@ -44,7 +44,7 @@ class Controller:
             self._press()
 
     def _press(self):
-        print(self.data)
+        #print(self.data)
         buttons = self.data["buttons"]
         if len(buttons) == 0:
             return

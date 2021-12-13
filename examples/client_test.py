@@ -15,8 +15,15 @@ def show_screen():
         print("get", fps, frame.shape)
         client.press([Button.BUTTON_A], hold=True, sec=0.02)
     client.run_screen(callback, fps=15, render=True, width=500, height=300)
-    
+
+def run_game_test():
+    game_path = "/workspace/games/SSBU/'Super Smash Bros Ultimate [v0].nsp'"
+    dlc_dir = "/workspace/games/SSBU/DLC"
+    client = Client(address="http://localhost:6000", disable_warning=True)
+    client.run_game(game_path, dlc_dir)
+
 if __name__ == "__main__":
-    show_screen()
+    #show_screen()
+    run_game_test()
     # TODO: async callback
     # TODO: RunnerView
