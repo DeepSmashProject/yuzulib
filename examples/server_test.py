@@ -1,4 +1,5 @@
 
-from yuzulib import run_server
+from yuzulib import Server
 
-run_server()
+server = Server(host='0.0.0.0', port=6000)
+server.run()
