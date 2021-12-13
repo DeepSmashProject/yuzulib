@@ -30,5 +30,9 @@ sleep 2
 # Run yuzu emulator
 /yuzu/build/bin/yuzu &
 
+# Run yuzu REST api
+#python3 /workspace/yuzulib/run_server.py --host 0.0.0.0 --port 6000 &
+python3 /workspace/yuzulib/run_server.py --host $API_HOST --port $API_PORT &
+
 # bash
 /bin/bash
