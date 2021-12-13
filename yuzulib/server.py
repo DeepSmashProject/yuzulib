@@ -85,11 +85,13 @@ class RunnerView(FlaskView):
             if key not in req_data.keys():
                 return Response("ERROR: {} argument is not exist".format(key)), 400
         self.runner.run_game(req_data["game_path"], req_data["dlc_dir"])
+        return Response("OK"), 200
 
     @route('/reset_game',methods=["POST"])
     def reset_game(self):
         # curl -X POST 'localhost:6000/runner/reset_game'
         self.runner.reset_game()
+        return Response("OK"), 200
 
 class Server:
     def __init__(self, host, port) -> None:
