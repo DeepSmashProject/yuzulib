@@ -7,6 +7,8 @@ docker run --privileged -it --rm --gpus all \
   -e DISPLAY=:1 \
   -e BUS_ID=13:0:0 \
   -e NOVNC_PORT=8082 \
+  -e API_PORT=6000 \
+  -e API_HOST=0.0.0.0 \
   -v "/home/ruirui_nis/workspace/DeepSmashProject:/workspace" \
   -v "/mnt/bigdata/00_students/ruirui_nis/DeepSmashProject/games:/workspace/games" \
   -v "/mnt/bigdata/00_students/ruirui_nis/DeepSmashProject/keys:/root/.local/share/yuzu/keys" \
