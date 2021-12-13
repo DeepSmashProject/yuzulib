@@ -2,7 +2,7 @@ version: '3'
 services:
   yuzu_emu:
     tty: true
-    image: yuzu_emu:latest
+    image: deepsmash/yuzu_emu:latest
     privileged: true
     runtime: nvidia
     container_name: yuzu_emu

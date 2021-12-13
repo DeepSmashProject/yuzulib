@@ -9,4 +9,4 @@ docker run --privileged -it --rm --gpus all \
   -v "/home/ruirui_nis/workspace/DeepSmashProject:/workspace" \
   -v "/mnt/bigdata/00_students/ruirui_nis/DeepSmashProject/games:/workspace/games" \
   -v "/mnt/bigdata/00_students/ruirui_nis/DeepSmashProject/keys:/root/.local/share/yuzu/keys" \
-  --name yuzu_emu yuzu_emu
+  --name yuzu_emu deepsmash/yuzu_emu:latest
