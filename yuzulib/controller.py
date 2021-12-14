@@ -1,11 +1,9 @@
 from contextlib import ExitStack
 from typing import List
-from cv2 import mulSpectrums
-import pyautogui
 from .enums import Button
 import threading
 import time
-from pynput.keyboard import Controller as Con
+from pynput.keyboard import Controller as Con, Key
 class Controller:
     def __init__(self):
         self.control_event = threading.Event()
@@ -22,7 +20,7 @@ class Controller:
         thread.start()
         time.sleep(1)
 
-    def press(self, buttons, hold=False, sec=0, wait=0):
+    def press(self, buttons: List[Button], hold=False, sec=0, wait=0):
         if self.data["hold"]:
             if buttons == self.data["buttons"]:
                 if not hold:
@@ -31,9 +29,18 @@ class Controller:
                     return
             else:
                 self.unhold_event.set()
-        self.data = {"buttons": buttons, "hold": hold, "sec": sec}
+        pynput_buttons = self._convert_pynput_buttons(buttons)
+        self.data = {"buttons": pynput_buttons, "hold": hold, "sec": sec}
         self.control_event.set()
         time.sleep(wait)
+    
+    def _convert_pynput_buttons(self, buttons: List[Button]):
+        pynput_buttons = []
+        for bt in buttons:
+            if bt.value in Key.__members__:
+                pynput_buttons.append(Key[bt.value])
+        return pynput_buttons
+
 
     def _control(self):
         while True:
