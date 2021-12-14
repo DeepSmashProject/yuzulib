@@ -17,7 +17,6 @@ from flask_classful import FlaskView, route
 
 class ControllerView(FlaskView):
     controller = Controller()
-    controller.run()
     @route('/press',methods=["POST"])
     def press(self):
         # curl -X POST -d '{"buttons": ["BUTTON_A"]}' 'localhost:6000/controller/press?hold=True&sec=0&wait=0'

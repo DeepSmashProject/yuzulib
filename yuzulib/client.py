@@ -23,9 +23,10 @@ class Client:
         self._stream_screen(callback, fps=fps, render=render, width=width, height=height)
 
     def _stream_screen(self, callback, fps=15, render=False, width=256, height=256):
-        fig,ax = plt.subplots(1,1)
-        first_plot = True
-        im = None
+        if render:
+            fig,ax = plt.subplots(1,1)
+            first_plot = True
+            im = None
 
         start = time.time()
         url = '{}/screen/?width={}&height={}'.format(self.address, width, height)
