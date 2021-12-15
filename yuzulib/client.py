@@ -13,7 +13,7 @@ class Client:
     def wait_server(self):
         pass
 
-    def run_screen(self, callback, fps=15, render=False, width=256, height=256):
+    def run_screen(self, callback, fps=15, render=False, width=256, height=256, grayscale=False):
         print("run screen")
         url = '{}/screen/'.format(self.address)
         if self.disable_warning:
@@ -22,16 +22,17 @@ class Client:
         time.sleep(1)
         self._stream_screen(callback, fps=fps, render=render, width=width, height=height)
 
-    def _stream_screen(self, callback, fps=15, render=False, width=256, height=256):
+    def _stream_screen(self, callback, fps=15, render=False, width=256, height=256, grayscale=False):
         if render:
             fig,ax = plt.subplots(1,1)
             first_plot = True
             im = None
 
         start = time.time()
+        payload = {"size": {"width": width, "height": height}, "grayscale": grayscale}
         url = '{}/screen/?width={}&height={}'.format(self.address, width, height)
         while True:
-            res = requests.get(url)
+            res = requests.get(url, json=payload)
             elapsed_time = time.time() - start
             target_elapsed_time = 1/fps
             if target_elapsed_time < elapsed_time:

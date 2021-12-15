@@ -61,10 +61,11 @@ class ScreenView(FlaskView):
 
     @route('/',methods=["GET"])
     def get(self):
-        # curl -X GET 'localhost:6000/screen/'
+        # curl -X GET -d '{"size": {"width": 256, "height": 256}, "grayscale": True}' 'localhost:6000/screen/'
         ## curl -X GET 'localhost:6000/screen/?width=256&height=256'
         if not self.screen_flag["running"]:
             return Response("Error: screen is not running"), 400
+        req_data = json.loads(request.get_data())
         #width = int(request.args.get('width', 256))
         #height = int(request.args.get('height', 256))
         frame = self.screen_data["frame"]
@@ -74,7 +75,7 @@ class ScreenView(FlaskView):
         frame = frame[:,:,::-1]  # bgr2rgb
         # TODO: resize (256, 256) is required by 15Hz >
         frame = frame.tolist()
-        screen_data = self._process({"frame": frame, "fps": self.screen_data["fps"]})
+        screen_data = self._process({"frame": frame, "fps": self.screen_data["fps"]}, req_data)
         # TODO: cv2 is too low speed
         #frame = cv2.resize(np.array(frame).astype(np.float32), (width, height)).tolist()
         #frame = cv2.cvtColor(np.array(frame).astype(np.uint8), cv2.COLOR_BGR2RGB).tolist()
