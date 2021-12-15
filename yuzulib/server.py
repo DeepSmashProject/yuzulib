@@ -1,6 +1,7 @@
 
 import sys
 import threading
+from typing import List
 from flask import Flask, Response,stream_with_context, request
 from flask_cors import CORS
 from .controller import Controller
@@ -38,6 +39,9 @@ class ScreenView(FlaskView):
     screen_data = {"frame": None, "fps": 0}
     screen_flag = {"running": False}
 
+    def _process(self, screen_data):
+        return screen_data
+
     @route('/',methods=["POST"])
     def run(self):
         # curl -X POST 'localhost:6000/screen/?fps=60&disable_warning=true'
@@ -68,11 +72,13 @@ class ScreenView(FlaskView):
         #height = height if height <= frame.shape[0]-1 else frame.shape[0]-1
         frame = np.array(frame)[:, :, :3]
         frame = frame[:,:,::-1]  # bgr2rgb
+        # TODO: resize (256, 256) is required by 15Hz >
         frame = frame.tolist()
+        screen_data = self._process({"frame": frame, "fps": self.screen_data["fps"]})
         # TODO: cv2 is too low speed
         #frame = cv2.resize(np.array(frame).astype(np.float32), (width, height)).tolist()
         #frame = cv2.cvtColor(np.array(frame).astype(np.uint8), cv2.COLOR_BGR2RGB).tolist()
-        screen_data = {"frame": frame, "fps": self.screen_data["fps"]}
+        #screen_data = {"frame": frame, "fps": self.screen_data["fps"]}
         
         return Response(json.dumps(screen_data)), 200
 
@@ -95,19 +101,18 @@ class RunnerView(FlaskView):
         return Response("OK"), 200
 
 class Server:
-    def __init__(self, host, port) -> None:
+    def __init__(self, host, port, views: List[FlaskView]) -> None:
         self.host = host
         self.port = port
         self.app = Flask(__name__)
         CORS(self.app) #Cross Origin Resource Sharing
-        ControllerView.register(self.app)
-        ScreenView.register(self.app)
-        RunnerView.register(self.app)
-
+        for view in views:
+            view.register(self.app)
+            
     def run(self):
         self.app.debug = False
         self.app.run(host=self.host, port=self.port)
 
 if __name__ == '__main__':
-    server = Server(host='0.0.0.0', port=6000)
+    server = Server(host='0.0.0.0', port=6000, views=[ControllerView, ScreenView, RunnerView])
     server.run()
