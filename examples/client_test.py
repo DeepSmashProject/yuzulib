@@ -15,7 +15,7 @@ def show_screen():
     def callback(frame, fps):
         print("get", fps, frame.shape)
         client.press([Button.BUTTON_A], hold=True, sec=0.02)
-    client.run_screen(callback, fps=15, render=True, width=500, height=300)
+    client.run_screen(callback, fps=15, render=True, width=256, height=256, grayscale=True)
 
 def run_game_test():
     print("run game")

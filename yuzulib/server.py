@@ -1,4 +1,5 @@
 
+import re
 import sys
 import threading
 from typing import List
@@ -40,6 +41,8 @@ class ScreenView(FlaskView):
     screen_flag = {"running": False}
 
     def _process(self, screen_data, req_data):
+        info = {}
+        screen_data["info"] = info
         return screen_data
 
     @route('/',methods=["POST"])
@@ -61,25 +64,25 @@ class ScreenView(FlaskView):
 
     @route('/',methods=["GET"])
     def get(self):
-        # curl -X GET -d '{"size": {"width": 256, "height": 256}, "grayscale": True}' 'localhost:6000/screen/'
-        ## curl -X GET 'localhost:6000/screen/?width=256&height=256'
+        # curl -X GET -d '{"size": {"width": 256, "height": 256}, "grayscale": True, xxx}' 'localhost:6000/screen/'
         if not self.screen_flag["running"]:
             return Response("Error: screen is not running"), 400
         req_data = json.loads(request.get_data())
-        #width = int(request.args.get('width', 256))
-        #height = int(request.args.get('height', 256))
         frame = self.screen_data["frame"]
-        #width = width if width <= frame.shape[1]-1 else frame.shape[1]-1
-        #height = height if height <= frame.shape[0]-1 else frame.shape[0]-1
         frame = np.array(frame)[:, :, :3]
         frame = frame[:,:,::-1]  # bgr2rgb
-        # TODO: resize (256, 256) is required by 15Hz >
-        frame = frame.tolist()
         screen_data = self._process({"frame": frame, "fps": self.screen_data["fps"]}, req_data)
-        # TODO: cv2 is too low speed
-        #frame = cv2.resize(np.array(frame).astype(np.float32), (width, height)).tolist()
-        #frame = cv2.cvtColor(np.array(frame).astype(np.uint8), cv2.COLOR_BGR2RGB).tolist()
-        #screen_data = {"frame": frame, "fps": self.screen_data["fps"]}
+        frame = screen_data["frame"]
+        width = req_data["size"]["width"]
+        height = req_data["size"]["height"]
+        width = width if width <= frame.shape[1]-1 else frame.shape[1]-1
+        height = height if height <= frame.shape[0]-1 else frame.shape[0]-1
+        if width != None and height != None:
+            frame = cv2.resize(frame.astype(np.float32), (width, height))
+        if req_data["grayscale"]:
+            frame = cv2.cvtColor(frame.astype(np.uint8), cv2.COLOR_RGB2GRAY)
+        # TODO: .tolist is too low speed. should do after resize.
+        screen_data["frame"] = frame.tolist()
         
         return Response(json.dumps(screen_data)), 200
 

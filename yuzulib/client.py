@@ -20,7 +20,7 @@ class Client:
             url = '{}/screen/?disable_warning=true'.format(self.address)
         res = requests.post(url)
         time.sleep(1)
-        self._stream_screen(callback, fps=fps, render=render, width=width, height=height)
+        self._stream_screen(callback, fps=fps, render=render, width=width, height=height, grayscale=grayscale)
 
     def _stream_screen(self, callback, fps=15, render=False, width=256, height=256, grayscale=False):
         if render:
@@ -30,7 +30,7 @@ class Client:
 
         start = time.time()
         payload = {"size": {"width": width, "height": height}, "grayscale": grayscale}
-        url = '{}/screen/?width={}&height={}'.format(self.address, width, height)
+        url = '{}/screen/'.format(self.address)
         while True:
             res = requests.get(url, json=payload)
             elapsed_time = time.time() - start
@@ -45,7 +45,8 @@ class Client:
                 print("Error")
                 break
             start = time.time()
-            frame = np.array(res.json()["frame"]).astype(np.uint8)
+            data = res.json()
+            frame = np.array(data["frame"]).astype(np.uint8)
             # rendering
             if render:
                 if first_plot:
@@ -56,7 +57,7 @@ class Client:
                     fig.canvas.draw_idle()
                     plt.pause(0.001)
 
-            callback(frame, 1/elapsed_time)
+            callback(frame, 1/elapsed_time, data["info"])
 
     def press(self, buttons: List[Button], hold=False, sec=0, wait=0):
         url = '{}/controller/press'.format(self.address)
