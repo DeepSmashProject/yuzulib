@@ -39,6 +39,8 @@ class Controller:
         for bt in buttons:
             if bt.value in Key.__members__:
                 pynput_buttons.append(Key[bt.value])
+            else:
+                pynput_buttons.append(bt.value)
         return pynput_buttons
 
 
@@ -59,17 +61,17 @@ class Controller:
             for i, button in enumerate(buttons):
                 if i == len(buttons)-1:
                     break
-                stack.enter_context(self.keyboard.pressed(button.value))
+                stack.enter_context(self.keyboard.pressed(button))
             last_button = buttons[len(buttons)-1]
-            self.keyboard.press(last_button.value)
+            self.keyboard.press(last_button)
             if self.data["hold"]:
                 self.unhold_event.wait()
                 self.unhold_event.clear()
-                self.keyboard.release(last_button.value)
+                self.keyboard.release(last_button)
             else:
                 if self.data["sec"] != None:
                     time.sleep(self.data["sec"])
-                self.keyboard.release(last_button.value)
+                self.keyboard.release(last_button)
 
     def close(self):
         time.sleep(1)

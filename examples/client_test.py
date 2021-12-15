@@ -2,7 +2,8 @@ import os
 import shutil
 import requests
 import time
-from yuzulib import Client, Button
+from yuzulib.client import Client
+from yuzulib.enums import Button
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation

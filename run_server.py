@@ -1,5 +1,5 @@
 import argparse
-from yuzulib import Server
+from yuzulib.server import Server
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--host')
