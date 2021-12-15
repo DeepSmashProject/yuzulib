@@ -7,10 +7,14 @@ import matplotlib.pyplot as plt
 
 def register_to_server(address="http://localhost:6000"):
     url = '{}/server/register'.format(address)
-    res = requests.post(url)
-    if res.status_code == "200":
-        return True
-    return False
+    try:
+        res = requests.post(url, timeout=1)
+        if res.status_code == "200":
+            return True
+        print(res)
+        return False
+    except Exception:
+        return False
 
 class Client:
     def __init__(self, address="http://localhost:6000", disable_warning=False) -> None:

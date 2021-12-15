@@ -106,12 +106,13 @@ class RunnerView(FlaskView):
         return Response("OK"), 200
 
 class ServerView(FlaskView):
-    status = {"register": False}
+    server_status = {"register": False}
     @route('/register',methods=["POST"])
-    def register(self):
-        if self.status["register"]:
+    def register_server(self):
+        # curl -X POST localhost:6000/server/register
+        if self.server_status["register"]:
             return Response("Error"), 400
-        self.status["register"] = True
+        self.server_status["register"] = True
         return Response("OK"), 200
 
 class Server:
