@@ -5,13 +5,17 @@ import requests
 from .enums import Button
 import matplotlib.pyplot as plt
 
+def register_to_server(address="http://localhost:6000"):
+    url = '{}/server/register'.format(address)
+    res = requests.post(url)
+    if res.status_code == "200":
+        return True
+    return False
+
 class Client:
     def __init__(self, address="http://localhost:6000", disable_warning=False) -> None:
         self.address = address
         self.disable_warning = disable_warning
-
-    def wait_server(self):
-        pass
 
     def run_screen(self, callback, fps=15, render=False, width=256, height=256, grayscale=False):
         print("run screen")

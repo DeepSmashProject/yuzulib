@@ -81,6 +81,7 @@ class ScreenView(FlaskView):
             frame = cv2.resize(frame.astype(np.float32), (width, height))
         if req_data["grayscale"]:
             frame = cv2.cvtColor(frame.astype(np.uint8), cv2.COLOR_RGB2GRAY)
+            frame = frame[:, :, np.newaxis]
         # TODO: .tolist is too low speed. should do after resize.
         screen_data["frame"] = frame.tolist()
         
@@ -102,6 +103,15 @@ class RunnerView(FlaskView):
     def reset_game(self):
         # curl -X POST 'localhost:6000/runner/reset_game'
         self.runner.reset_game()
+        return Response("OK"), 200
+
+class ServerView(FlaskView):
+    status = {"register": False}
+    @route('/register',methods=["POST"])
+    def register(self):
+        if self.status["register"]:
+            return Response("Error"), 400
+        self.status["register"] = True
         return Response("OK"), 200
 
 class Server:
