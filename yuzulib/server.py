@@ -128,5 +128,5 @@ class Server:
         self.app.run(host=self.host, port=self.port)
 
 if __name__ == '__main__':
-    server = Server(host='0.0.0.0', port=6000, views=[ControllerView, ScreenView, RunnerView])
+    server = Server(host='0.0.0.0', port=6000, views=[ControllerView, ScreenView, RunnerView, ServerView])
     server.run()
