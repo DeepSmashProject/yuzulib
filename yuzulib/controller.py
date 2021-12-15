@@ -20,17 +20,15 @@ class Controller:
         thread.start()
         time.sleep(1)
 
-    def press(self, buttons: List[Button], hold=False, sec=0, wait=0):
+    def press(self, buttons: List[Button], hold=False, sec=0, wait=0, refresh=False):
         if self.data["hold"]:
-            if buttons == self.data["buttons"]:
-                if not hold:
-                    self.unhold_event.set()
-                else:
-                    return
+            if buttons == self.data["buttons"] and hold and not refresh:
+                return
             else:
                 self.unhold_event.set()
-        pynput_buttons = self._convert_pynput_buttons(buttons)
-        self.data = {"buttons": pynput_buttons, "hold": hold, "sec": sec}
+                time.sleep(0.02)
+                
+        self.data = {"buttons": buttons, "hold": hold, "sec": sec}
         self.control_event.set()
         time.sleep(wait)
     
@@ -54,7 +52,8 @@ class Controller:
 
     def _press(self):
         #print(self.data)
-        buttons = self.data["buttons"]
+        #buttons = self.data["buttons"]
+        buttons = self._convert_pynput_buttons(self.data["buttons"])
         if len(buttons) == 0:
             return
         with ExitStack() as stack:
