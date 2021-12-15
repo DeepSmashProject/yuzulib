@@ -39,7 +39,7 @@ class ScreenView(FlaskView):
     screen_data = {"frame": None, "fps": 0}
     screen_flag = {"running": False}
 
-    def _process(self, screen_data):
+    def _process(self, screen_data, req_data):
         return screen_data
 
     @route('/',methods=["POST"])
