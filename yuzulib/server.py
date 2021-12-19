@@ -115,6 +115,12 @@ class ServerView(FlaskView):
         self.server_status["register"] = True
         return Response("OK"), 200
 
+    @route('/unregister',methods=["POST"])
+    def unregister_server(self):
+        # curl -X POST localhost:6000/server/unregister
+        self.server_status["register"] = False
+        return Response("OK"), 200
+
 class Server:
     def __init__(self, host, port, views: List[FlaskView]) -> None:
         self.host = host

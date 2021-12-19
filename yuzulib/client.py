@@ -9,9 +9,20 @@ def register_to_server(address="http://localhost:6000"):
     url = '{}/server/register'.format(address)
     try:
         res = requests.post(url, timeout=1)
-        if res.status_code == "200":
-            return True
         print(res)
+        if res.status_code == 200:
+            return True
+        return False
+    except Exception:
+        return False
+
+def unregister_to_server(address="http://localhost:6000"):
+    url = '{}/server/unregister'.format(address)
+    try:
+        res = requests.post(url, timeout=1)
+        print(res)
+        if res.status_code == 200:
+            return True
         return False
     except Exception:
         return False
