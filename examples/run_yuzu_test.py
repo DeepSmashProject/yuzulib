@@ -19,6 +19,6 @@ def callback(frame, fps):
 screen = Screen(callback, fps=60)
 screen.run()
 
-runner = Runner(args.game, args.dlc)
-runner.run()
+runner = Runner()
+runner.run_game(args.game, args.dlc)
 
