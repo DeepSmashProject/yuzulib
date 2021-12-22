@@ -57,6 +57,8 @@ class Screen:
             while self.alive:
                 img = sct.grab(mon)
                 frame = np.array(img)
+                frame = np.array(frame)[:, :, :3] # bgra2bgr
+                frame = frame[:,:,::-1]  # bgr2rgb
                 if cv2.waitKey(33) & 0xFF in (ord('q'), 27):
                     break
 
