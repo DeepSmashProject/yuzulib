@@ -125,11 +125,12 @@ ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPA
 RUN apt -y install python3-tk python3-dev scrot vim
 #RUN apt install -y --no-install-recommends ubuntu-desktop && \
 #    apt install -y gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal
-WORKDIR /workspace
-RUN git clone https://github.com/DeepSmashProject/yuzulib.git
-RUN pip install -e yuzulib
+WORKDIR /workspace/yuzulib
+COPY . .
+#RUN git clone https://github.com/DeepSmashProject/yuzulib.git
+RUN pip install -e .
 
-COPY ./entrypoint.sh /entrypoint.sh
+COPY ./docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 CMD /entrypoint.sh
 # docker build -t yuzu_emu:latest . 
