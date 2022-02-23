@@ -1,0 +1,1 @@
+python3 move_to_training.py
