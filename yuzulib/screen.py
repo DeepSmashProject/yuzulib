@@ -32,7 +32,7 @@ class Screen:
         (_, _, _, tb_height) = self.get_locate_on_screen(Image.TOP_BAR, confidence=.8)
         (_, _, _, bb_height) = self.get_locate_on_screen(Image.BOTTOM_BAR, confidence=.8)
         left, top, width, height = yuzu_left, yuzu_top+tb_height, yuzu_width, yuzu_height-tb_height-bb_height
-        print("screen: ", left, top, width, height) # 214, 141, 853, 487
+        print("screen: ", left, top, width, height) # 214, 141, 853, 441
         return {"left": left, "top": top, "width": width, "height": height}
 
     def get_locate_on_screen(self, image, confidence=.9):
