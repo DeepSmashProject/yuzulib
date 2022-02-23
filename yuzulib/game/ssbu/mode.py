@@ -227,7 +227,7 @@ class TrainingMode:
 
     def reset(self):
         #print("Reset Training")
-        self._controller.press([Button.BUTTON_L, Button.BUTTON_R, Button.BUTTON_A], sec=0.02)
+        self._controller.press([Button.BUTTON_L, Button.BUTTON_R, Button.BUTTON_A], sec=0.02, wait=0.2)
         time.sleep(0.1)
 
 
