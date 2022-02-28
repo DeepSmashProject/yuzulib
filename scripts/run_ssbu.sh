@@ -1,1 +1,1 @@
-python3 run_yuzu_test.py -g /workspace/games/SSBU/Super\ Smash\ Bros\ Ultimate\ \[v0\].nsp -d /workspace/games/SSBU/DLC/
+python3 run_game.py -g /workspace/games/SSBU/Super\ Smash\ Bros\ Ultimate\ \[v0\].nsp -d /workspace/games/SSBU/DLC/
