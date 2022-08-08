@@ -2,11 +2,11 @@
 
 # Getting Started
 
-## Run Yuzu
+## Run Yuzu on docker
 ```
 $ cd docker
 $ bash build.sh
-$ bash run.sh
+$ bash run.sh -g /home/user/games -k /home/user/keys -v /home/user/workspace
 (docker) $ /yuzu/build/bin/yuzu
 ```
 You can screen at https://localhost:8081/vnc.html
